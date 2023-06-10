@@ -1,0 +1,41 @@
+1. To Check Column statistics
+-> Get the data -> Transform -> Under the headers, you will see a bold bluish-green border -> hover your mouse and you will see the three below stats:
+	a. No of rows
+	b. Errors in those row values
+	c. Blank values count
+	
+	Instead of hovering, if we want to directly see the stats
+	a. go to the ribbon -> view -> check the "column quality" option 
+	b. In view -> click column profiling to see additional stats (MIN , MAX, Colm distribution, unique, STDEV..)
+	
+Note : If you see a red line after transformation, it means that column values contains some errors
+
+2. To parse dates in power query if dates are in (MM-DD-YYYY (US format)) or (DD-MM-YYYY (UK Format))
+-> right click on the date column -> click locale -> choose date and choose format of the dates accordingly (UK or US)
+
+3. To remove all the rows in the column whenever a particular column contains certain value
+-> lets see remove all columns with gender as MALE
+	a. filter the column and close and apply
+	
+4. How to fill NULL values in a column with some other value OR replace a particular value in a column with some other value
+-> select the column -> Home Tab -> Replace Value
+
+5. to SPLIT a column
+-> right click on the column -> choose SPLIT Column -> Delimeter
+
+6. To rename a column, just double click on column name and edit the name
+
+7. To remove duplicate rows -> select column -> home tab -> "Remove rows" drop down -> remove duplicate rows
+
+8. Suppose some of your data has whitespaces , to remove them
+-> Transform tab -> FORMAT dropdown -> TRIM
+
+9. How to merge two tables based on a column
+-> Home tab -> Merge Queries -> select the column/s on which you want to merge -> choose JOIN type
+JOIN Types in Power BI
+1. Left Outer (All rows in left, matching rows from right) 
+2. Right Outer (All rows in right, matching rows from left) 
+3. Full Outer (All rows)
+4. Inner (Only Matching rows)
+5. Left Anti (brings in only rows from the left table that don't have any matching rows from the right table.)
+6. Right Anti (brings in only rows from the right table that don't have any matching rows from the left table.)
