@@ -1,0 +1,446 @@
+CHATGPT
+Aggregation and Calculation:
+	SUM: Calculates the sum of a column.
+	AVERAGE: Calculates the average of a column.
+	COUNT: Counts the number of rows in a column.
+	MIN: Returns the minimum value from a column.
+	MAX: Returns the maximum value from a column.
+	DISTINCT: Returns unique values from a column.
+	DIVIDE: Performs division and handles zero or blank values.
+	RANKX: Assigns a rank to values in a column based on a specified expression.
+	PERCENTILEX.EXC: Calculates the nth percentile of a column excluding zero and blank values.
+	STDEV.P: Calculates the standard deviation based on the entire population.
+	
+Filtering and Context Manipulation:
+	FILTER: Filters a table based on a condition.
+	CALCULATE: Modifies the filter context of an expression.
+	ALL: Removes filters from a column or table.
+	RELATED: Retrieves a value from a related table.
+	ALLEXCEPT: Removes filters from all columns except specified ones.
+	VALUES: Returns distinct values from a column in the current context.
+	HASONEVALUE: Checks if a column has only one distinct value in the current context.
+	SELECTEDVALUE: Returns the value of a column if it has only one distinct value in the current context.
+	
+Time Intelligence:
+	TOTALYTD: Calculates a running total for a measure over a year-to-date period.
+	SAMEPERIODLASTYEAR: Returns the corresponding period from the previous year.
+	DATEADD: Adds or subtracts a time period from a given date.
+	PARALLELPERIOD: Returns a previous or future period based on a given date.
+	PREVIOUSMONTH: Returns the previous month relative to a given date.
+	TOTALMTD: Calculates a running total for a measure over a month-to-date period.
+	STARTOFYEAR: Returns the start date of the year for a given date.
+Data Analysis and Ranking:
+	TOPN: Filters a table to show the top N rows based on a column value.
+	CALCULATETABLE: Modifies the filter context of a table expression.
+	SUMMARIZE: Creates a summary table by grouping columns and calculating values.
+	COUNTROWS: Counts the number of rows in a table or table expression.
+	SELECTCOLUMNS: Creates a new table with selected columns from an existing table.
+	DISTINCTCOUNT: Calculates the number of distinct values in a column.
+	GENERATE: Creates a new table by iterating over values in columns or expressions.
+	
+String Manipulation:
+	CONCATENATEX: Concatenates values from a column into a single string.
+	LEFT: Returns a specified number of characters from the beginning of a string.
+	RIGHT: Returns a specified number of characters from the end of a string.
+	SUBSTITUTE: Replaces text in a string with new text.
+	UPPER: Converts a string to uppercase.
+	LOWER: Converts a string to lowercase.
+	TRIM: Removes leading and trailing spaces from a string.
+	
+Logical and Conditional:
+	IF: Performs a logical test and returns different values based on the result.
+	AND: Checks if all conditions are true.
+	OR: Checks if at least one condition is true.
+	NOT: Negates a logical value or expression.
+	SWITCH: Evaluates a series of conditions and returns a corresponding result.
+	ISBLANK: Checks if a value is blank.
+
+Data Type Conversion:
+	FORMAT: Converts a value to a specified format.
+
+ROUND: Rounds a value to a specified number of decimal places.
+BLANK: Represents a blank value.
+
+
+==========================================================================================================
+1. Difference between SELECTEDCOLUMNS and ADDCOLUMNS?
+SELECTEDCOLUMNS :
+	# Adds calculated columns to the given table or table expression
+	# SELECTEDCOLUMNS is a tabular function in DAX which means it returns a table as a result
+	
+	SYNTAX: 
+	SELECTEDCOLUMNS(<table>, <name>, <expression>)
+		Table : the table the we want to add columns to it
+		Name : the name of the new calculated columns
+		Expression : the expression of the new calculated columns
+		you can add multiple columns using this function
+	
+ADDCOLUMNS :
+	# Adds calculated columns to the given table or table expression.
+	# ADDCOLUMNS is a tabular function in DAX, which means it returns a table as a result
+
+
+SELECTCOLUMNS has the same signature as ADDCOLUMNS, and has the same behaviour except that instead of starting with the <Table> Specified, SELECTCOLUMNS starts with an empty table before adding columns.
+
+One big difference of SELECTCOLUMNS and ADDCOLUMNS is that ADDCOLUMNS keeps all the existing column in the table and adds more columns to that, but the SELECTCOLUMNS starts with no columns from the table, and builds a custom subset of columns with additional calculated columns on it.
+
+>>Selectcolumns_table = SELECTCOLUMNS(Superstore,
+    "Country", Superstore[Country],
+    "ProductID", Superstore[Product ID],
+    "Quantity", Superstore[Quantity],
+    "Unit Price", Superstore[Sales],
+    "Revenue", Superstore[Quantity]*Superstore[Sales]
+)
+---This will create a new table with this columns
+
+>>Addcolumns_table = ADDCOLUMNS(Superstore,
+    "Revenue", Superstore[Quantity]*Superstore[Sales]
+)
+---This will return the whole table with the new calculated columns.
+
+REFER : https://www.youtube.com/watch?v=92owR-WKm24&ab_channel=Lotusamaze
+
+
+
+-------------------------------------
+
+2. EARLIER
+	# Returns the current value of the specified column in an outer evaluation pass of the mentioned column
+	# The EARLIER function allows us to jump from one context to a prior row context, so we can grab the result we want
+
+SYNTAX : EARLIER(<colm_name,[<number>])
+
+ROW CONTEXT : means that an evaluation is going to happen at every single row. And every single row in a calculated column has a result with the evaluation that's happening at every single row. 
+
+CUMMULATIVE SUM:
+Cummulative_revenue = CALCULATE(
+    SUM(Superstore[Store_revenue]),
+    FILTER(
+        Superstore,
+        Superstore[Store_revenue] <= EARLIER(Superstore[Store_revenue])
+    )
+)
+
+FILTER is used to create nexted row context
+EARLIER is used for current row context
+
+CountROW :
+CountRow = COUNTROWS(FILTER(Superstore, Superstore[Store_revenue] < EARLIER(Superstore[Store_revenue]))
+
+REFER : https://www.youtube.com/watch?v=Dm5zA-I6Rsg&ab_channel=Lotusamaze
+
+----------------------------------
+
+3. FILTER
+	# Returns a table that has been filtered
+	
+	SYNTAX : FILTER(table, filter)
+	
+	NOTE : Dont confuse the filter parameter inside CALCULATE() with FILTER() function - they are two seperate things
+	
+	>>Filter_Table = FILTER(Superstore, Superstore[City]="Houston")
+
+	Q. Count the products with CITY as Houston
+	>>Houston_product_count = COUNTROWS(FILTER(Superstore, Superstore[City]="Houston"))
+
+
+-------------------------------------------
+
+4. LOOKUPVALUE
+	# Retrieves a value from a table
+	
+	SYNTAX : 
+	LOOKUPVALUE(result_col_name, search_col_name, search_value...)
+	.. : can be repeated
+	
+
+--------------------------------------------
+
+5. CALENDAR
+	# Returns a table with a single column "Date" that contains a contiguous set of the dates.
+	
+	SYNTAX : CALENDAR(start_date, end_date)
+	
+	Example : CALENDAR(DATE(2020,01,25), DATE(2021,02,13)
+	
+--------------------------------------------
+
+6. YEARFRAC(start_date, end_date)
+	# This function returns the difference between the start_date and end_date in years in fraction(decimals).
+	
+	Suppose you have a table with column "DOB" and you want to find their age.
+	
+	>>Leadtime_Year_Frac = ROUND(YEARFRAC(Superstore[Order Date],NOW()),2)
+	
+	Note : I think it can be achieved using DATEDIFF (but no decimals)
+	
+	>>leadTime_DATEDIFF = DATEDIFF(Superstore[Order Date],NOW(),YEAR)
+
+
+---------------------------------------------
+
+7. EDATE(<start_date>, <months>)  
+	# Returns previous dates or future dates. Adding or subtracting months.
+	#Can be used for calculated columns
+	
+	EDATE_order_date = EDATE(Superstore[Order Date],-2)
+	
+	
+--------------------------------------------
+8. PARALLELPERIOD
+	# Returns a parallel period of dates by the given set of dates and a specific interval
+	
+	SYNTAX:
+	PARALLELPERIOD(dates, no_of_intervals, interval)
+	no_of_intervals could be positive or negative
+	
+	RETURN VALUE:
+	A table containing a single column of date values
+	
+	NOTE: This is not returning one single value. Means you cannot use it directly in a measure. You have to use this function as a filter function.
+	
+	Q) Compare the revenue of each year with its last year revenue and plot a table in report view
+	
+	>>PARALLELPERIOD_rev = CALCULATE(Superstore[Store_rev_measure], PARALLELPERIOD(Superstore[Order Date].[Date],-1,YEAR))
+	
+-------------------------------------------------
+
+9. LOGICAL FUNCTIONS
+IF | AND | COALESCE | TRUE | FALSE | IFERROR | NOT | OR | SWITCH | IN 
+
+Examples:
+SWITCH: This function matches the input expression with a list of values and returns one of the various possible outcomes. It operates using the following syntax:
+SWITCH(<expression>, <value>, <result>[, <value>, <result>]…[, <else>])
+
+>>Strategy = SWITCH(
+    TRUE,
+    Superstore[Segment] in {"Home Office", "Corporate"}, "Office Discounts",
+    "Non-Office Discounts"
+)
+	
+	
+--------------------------------------------------
+
+10. Difference between SUM and SUMX
+	
+	# SUMX,AVERAGEX are iterating function that go through every single row of a table to add logic of these rows whereas Aggregate functions like SUM,MIN,MIX,AVERAGE look at the entire column.
+	
+	SYNTAX : SUM(colm_name)
+			: SUMX(table, expression)
+			
+	SUMX can be used to add two numericals/columns together
+	
+--------------------------------------------------
+
+11. How to SPLIT column using DAX
+
+- FIND Function
+	# Returns the starting position of one text string within another text string.
+	
+	SYNTAX : FIND(findText, withinText, StartPosition, NotFoundValue)
+	
+	Find_ER = FIND("er",lower(Superstore[Customer Name]),1,FALSE)
+	
+- LEFT function
+	# Returns the specified no of characters from the start of a text string
+	
+	SYNTAX : LEFT(FindText, NumOfChars)
+	
+- LEN function
+	# Returns the no of characters in a text string
+	
+	SYNTAX : LEN(FindText)
+	
+	FULL Name
+	Ankit Banerjee
+	Ankit-Kumar
+	Ram-Charan
+	Rahul Soma
+	
+	>>FirstName = LEFT(
+		Superstore[Customer Name], 
+		FIND(" ",Superstore[Customer Name],1,
+			FIND(
+			"-",Superstore[Customer Name],1,0
+			)
+		)
+	)
+	
+	>>LastName = RIGHT(Superstore[Customer Name], 
+		LEN(Superstore[Customer Name]) - FIND(" ",Superstore[Customer Name],1,FIND("-",Superstore[Customer Name],1,0))
+	)
+	
+	
+------------------------------------------------
+
+12. CALENDERAUTO
+	
+	#Returns a table with one column of dates calculated from the model automatically.
+	
+	SYNTAX : CALENDERAUTO([FiscalYearEndMonth])
+	
+	a. FiscalYearEndMonth : Any DAX expression that returns an integer from 1 to 12
+	
+	b. If you mention the number then it will stat from that number to 12 by default
+	
+	c. If omitted then it will start from minimum value to maximum value in calendar table of current user.
+	
+	CALENDERAUTO() - retruns all dates from JAN-01-2023 to DEC-01-2023
+	
+	CALENDERAUTO(3) - returns dates from MAR-01-2023 to FEB-28-2026
+	
+	FEB-28-2026 : could be max date of your date column or it would be greater
+
+	#Working of CALENDERAUTO: automatically it takes the min and max dates and then creates the date series.
+
+-------------------------------------------------
+
+13. COUNT | COUNTA | COUNTROWS | COUNTBLANK | COUNDISTINCT | COUNTAX | COUNTX
+
+COUNT : 
+	# The COUNT function counts the no of cells in a column that contains non-blank values
+	
+	RETURN VALUE : A whole number
+	
+	# The COUNT function counts rows that contains Numbers, Dates, Strings
+	
+COUNTA : 
+	# Similar to COUNT, but it also works on BOOLEAN value.
+	
+COUNTBLANK : counts the blank cells
+
+COUNDISTINCT : Counts the distinct values  
+
+COUNTX : 
+	#Similar to COUNT , but is used to iterate through the rows in a table and count rows where the specified expressions results in a non-blank result.
+
+	SYNTAX : C OUNTX(<table>,<expression>)
+	
+	RETURN VALUE : A Whole Number
+	
+------------------------------------------------
+
+14. ALL | ALLSELECTED | ALLEXCEPT
+
+ALL :
+	# Returns all the rows in a table, or all values in a column, ignoring any filters that might have been applied.
+	
+	# This function removes the corresponding filters from the filter context, just as REMOVEFILTERS does.
+	
+	SYNTAX : ALL(table_or_colm_name...)
+	
+	RETURN VALUE : An entire table or a table with one or more columns.
+
+	>>ALLRevenue = CALCULATE(SUM(Superstore[Store_revenue]),ALL())
+	
+	# Even thou you filter some country,city..using slicer or filter, the above measure would still give the complete total sales revenue.
+	
+	>>ALLCityRevenue = CALCULATE(SUM(Superstore[Store_revenue]),ALL(Superstore[Segment]))
+	
+	# Refer the report view table
+	# Here it would not consider Segment revenue so for every city, it would give its revenue.
+	# If the city occurs multiple times, it will show the same revenue
+	
+ALLEXCEPT : 
+	
+	# Returns all the rows in atable except for those rows that are affected by the speciofied column filters.
+	
+	SYNTAX : ALLEXPECT(table_name, colm_name....)
+	
+	>>ReportTable = 
+		SUMMARIZECOLUMNS(
+			Superstore[City],
+			Superstore[Segment],
+			"Revenue", SUM(Superstore[Sales]),
+			"Total City Revenue", CALCULATE(SUM(Superstore[Sales]), ALLEXCEPT(Superstore,Superstore[City]))
+		)
+		
+	# HEre we are calculating the revenue of just CITY against various column.
+	
+---------------------------------------------------
+
+15. MIN | MINA | MINX
+	
+	MIN - returns the smallest value
+	blank is treated as 0 under MIN function
+	# Column level
+	
+	MINA - Similar to MIN but it can evaluate BOOLEAN(True/False)
+	#Treats TRUE as 1 and FALSE as 0
+	
+	MINX - iterates row level and can compare cell by cell
+	
+----------------------------------------------------
+
+16. AVERAGE | AVERAGEA | AVERAGEX
+
+
+----------------------------------------------------
+
+17. RELATED | RELATEDTABLE
+
+RELATED :
+	# RELATED will return the related value one table to another table. This is similar to the lookup value function we have in MS EXCEL, i.e., VLOOKUP
+	
+	# The RELATED function requires that a relationship exists between the current table and the table with related information. You specify the column that contains the data that you want, and the function follows an existing many-to-one relationship to fetch the value from the specified column in the related table.
+	
+	# SYNTAX : RELATED(Colm_name) 
+	
+	# Discount = RELATED ( Product[Unit Price] ) - Sales[Net Price]
+
+	
+RELATEDTABLE :
+	# Difference is RELATED returns a scalar value whereas RELATEDTABLE returns a table filtered so that it only includes related rows.
+	
+	# The returned table is a sub-table of the given table for all records that match the key in the current row of the current table.
+	
+	# This function is a shortcut for CALCULATETABLE function with o logical expression.
+	
+	SYNTAX : RELATEDTABLE(table_name)
+	
+	# Can be called as LEFT JOIN where the unmatched cell would be BLANK 
+	
+---------------------------------------------------
+
+18. DATEDIFF 
+	# Returns the number of units (unit specified in Interval) between the input two dates.
+	
+	SYNTAX : DATEDIFF (date_1, date_2, interval)
+	
+	Interval can be second, minute, hour, day , week, month, quarter, year
+	
+----------------------------------------------------
+
+19. SAMEPERIODLASTYEAR
+	
+	# Returns a table that contains a column of dates shifted one year back in time from the dates specified.
+	
+	# Returns a set of dates in the current selection from the previous year
+	
+	SYNTAX : SAMEPERIODLASTYEAR(<date>)
+	
+	Dates : A column containing dates
+	
+	Return value : A single column table of date values
+	
+	NOTE : This is not returning one single value. Means you cannot use it directly in a measure.
+	
+	
+	
+	
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+

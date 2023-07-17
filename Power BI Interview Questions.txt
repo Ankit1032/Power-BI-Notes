@@ -1,0 +1,978 @@
+1. Difference between Power Query vs Power Pivot vs Power View
+	Power Query: (When we get data and click on Transform, that brings us to power query)
+		- TO clean data
+		- Uses M functions (M stands for Mashup means clean up)
+		- Uses more memory for M functions
+		- We have all sorts of functions like remove rows, keep rows, remove columns, split columns, group by
+		- Power Query is basically ETL (Extract , Transform, Load)
+		
+	Power Pivot:
+		- To do Data modelling
+		- Uses DAX functions
+		- Light weight functions, doesn't take too much memory
+		- relationship building between 2 tables is done by power pivot
+		- we also create measures and calculated columns
+		
+	Power View:
+		- The interfance consisting of graphs, charts and metrics
+	
+2. What is DAX?
+	DAX stands for Data Analysis Expressions. It's a collection of functions, operators, and constants used in formulas to calculate and return values. In other words, it helps you create new info from data you already have.
+
+	3. What are Filters in Power BI?
+	The term "Filter" is self-explanatory. Filters are mathematical and logical conditions applied to data to filter out essential information in rows and columns. The following are the variety of filters available in Power BI:
+
+	Manual filters
+	Auto filters
+	Include/Exclude filters
+	Drill-down filters
+	Cross Drill filters
+	Drillthrough filters
+	Drillthrough filters
+	URL filters–transient
+	Pass-Through filters
+	----
+	Filter on Visual
+	Filter on Page
+	Filter on All Page
+	Drill Through
+
+
+4. Difference between Slicers and Filters
+	Both filters and slicers allow you to filter data within your report but...
+	Slicers are visualizations on a Power BI canvas that allows users to refine the data for themselves easily. Filters are for developers to refine specific visuals, entire pages, or whole workbooks before sharing the dashboard(s) with end-users.
+
+5.  What is GetData in Power BI?
+	Get Data is a simple icon on Power BI used to import data from the source.
+
+6. Mention some advantages of Power BI.
+	Some of the advantages of using Power BI:
+
+	It helps build an interactable data visualization in data centers
+	It allows users to transform data into visuals and share them with anyone
+	It establishes a connection for Excel queries and dashboards for fast analysis
+	It provides quick and accurate solutions
+	It enables users to perform queries on reports using simple English words 
+	
+7. 15. List out some drawbacks/limitations of using Power BI.
+	Here are some limitations to using Power BI:
+
+	Power BI does not accept file sizes larger than 1 GB and doesn't mix imported data accessed from real-time connections.
+	There are very few data sources that allow real-time connections to Power BI reports and dashboards.
+	It only shares dashboards and reports with users logged in with the same email address.
+	Dashboard doesn't accept or pass user, account, or other entity parameters.
+
+8. Name the different connectivity modes available in Power BI? 
+	There are three main connectivity modes used in Power BI.
+
+	SQL Server Import
+	An SQL Server Import is the default and most common connectivity type used in Power BI. It allows you to use the full capabilities of the Power BI Desktop. 
+
+	Direct Query
+	The Direct Query connection type is only available when you connect to specific data sources. In this connectivity type, Power BI will only store the metadata of the underlying data and not the actual data.
+
+	Live Connection
+	With this connectivity type, it does not store data in the Power BI model. All interaction with a report using a Live Connection will directly query the existing Analysis Services model. There are only 3 data sources that support the live connection method - SQL Server Analysis Services (Tabular models and Multidimensional Cubes), Azure Analysis Services (Tabular Models), and Power BI Datasets hosted in the Power BI Service.
+	
+9. What are the various types of refresh options provided in Power BI? 
+	Four important types of refresh options provided in Microsoft Power BI are as follows:
+
+	Package refresh - This synchronizes your Power BI Desktop or Excel file between the Power BI service and OneDrive, or SharePoint Online.
+	Model or data refresh - This refreshes the dataset within the Power BI service with data from the original data source.
+	Tile refresh - This updates the cache for tile visuals every 15 minutes on the dashboard once data changes.
+	Visual container refresh - This refreshes the visible container and updates the cached report visuals within a report once the data changes.
+	
+10. Name the data sources can Power BI can connect to? 
+	Several data sources can be connected to Power BI, which is grouped into three main types:
+
+	Files:
+	It can import data from Excel (.xlsx, .xlxm), Power BI Desktop files (.pbix) and Comma-Separated Values (.csv). 
+
+	Content Packs:
+	These are a collection of related documents or files stored as a group. There are two types of content packs in Power BI:
+	Content packs from services providers like Google Analytics, Marketo, or Salesforce and Content packs are created and shared by other users in your organization. 
+	
+	Connectors:
+	Connectors help you connect your databases and datasets with apps, services, and data in the cloud.
+
+11. Explain how relationships are defined in Power BI Desktop? 
+	Relationships between tables are defined in two ways: 
+
+	Manually - Relationships between tables are manually defined using primary and foreign keys.
+	Automatic - When enabled, this automated feature of Power BI detects relationships between tables and creates them automatically.
+	
+12. Can you have more than one functional relationship between two tables in a Power Pivot data model?
+No. There can be multiple inactive relationships, but only one active relationship between two tables in a Power Pivot data model. Dotted lines represent inactive relationships, and continuous lines represent active relationships.
+
+13. Can you have a table in the model which does not have any relationship with other tables? 
+	Yes. There are two main reasons why you can have disconnected tables:
+
+	The table is used to present the user with parameter values to be exposed and selected in slicers 
+	It uses the table as a placeholder for metrics in the user interface
+	
+14. How do you reshape data in Power BI?
+	Power BI offers a wide variety of data source connectivity options. Data Editor is one of the tools used to manipulate rows and columns of the data and helps you reshape it according to the requirements.
+
+15. What gateways does Power BI have and why should you use them?
+	Gateways function as bridges between the in-house data sources and Azure Cloud Services.
+	
+	Personal Gateway: Used only by one person, data can be imported, and is only valid on Power BI Service.
+	On-Premises Gateway: This is an advanced form of the Personal Gateway, supporting Direct Query and usable by multiple users to refresh data.
+	
+16. Name the variety of Power BI Formats.
+	Power BI is available mainly in three formats, as mentioned below.
+
+	Power BI Desktop: Open-Source version for Desktop users 
+	Power BI Services: For Online Services
+	Power BI Mobile Application: Compatible with mobile devices
+	
+17. What are the three fundamental concepts of DAX?
+	Syntax: This is how the formula is written—the elements that comprise it. The syntax includes functions such as SUM (used when you want to add figures). If the syntax isn't correct, you'll get an error message. 
+	Functions: These are formulas that use specific values (also known as arguments) in a certain order to perform a calculation, similar to the functions in Excel. The categories of functions are date/time, time intelligence, information, logical, mathematical, statistical, text, parent/child, and others. 
+	Context: There are two types: row context and filter context. Row context comes into play whenever a formula has a function that applies filters to identify a single row in a table. When one or more filters are applied in a calculation that determines a result or value, the filter context comes into play.
+	
+18. What are the major differences between visual-level, page-level, and report-level filters in Power BI?
+	Visual-level filters are used to filter data within a single visualization. Page-level filters are used to work on an entire page in a report, and different pages can have various filters.
+
+	Report-level filters are used to filter all the visualizations and pages in the report.
+	
+19. Where is data stored in Power BI? 
+	Most of the time, power BI gets assisted by the cloud to store the data. Power BI can use a desktop service. Microsoft Azure is used as the primary cloud service to store the data.
+
+	Azure SQL Database
+	Azure Blob Storage
+
+
+20.  What is row level security?
+Row-Level security restricts the user to view and access the data based on filters. Row-level security limits the data a user can view and has access to, and it relies on filters. Users can define the rules and roles in Power BI Desktop and also publish them to Power BI Service to configure row-level security. Power BI Subscription is required.
+
+Suppose in our organization, we have HR/Marketing/Financeetc.. departments and we have created a global level dashboard but we want the departs to only see their data. So we will create a row level security for each users/department.
+
+21. What are the critical components of the Power BI toolkit?
+	The critical components of Power BI are mentioned below.
+
+	Power Query
+	Power Pivot
+	Power View
+	Power Map
+	Power Q&A
+	
+22. What do you mean by the content pack?
+	A content pack is defined as a ready-made collection of visualizations and Power BI reports using your chosen service. You'd use a content pack when you want to get up and running quickly instead of creating a report from scratch.
+
+23. Define bi-directional cross filtering.
+	Bidirectional cross-filtering lets data modelers to decide how they want their Power BI Desktop filters to flow for data, using the relationships between tables. The filter context is transmitted to a second related table that exists on the other side of any given table relationship. This procedure helps data modelers solve the many-to-many issue without having to complicated DAX formulas. So, to sum it up, bidirectional cross-filtering makes the job for data modelers easier.
+	
+	Bi-directional cross-filtering in Power BI refers to the ability to establish relationships between multiple tables or data sources, allowing filters applied in one direction to affect data in both directions. In simpler terms, it means that when you filter data in one table, the filter also applies to related tables, and vice versa.
+	
+	Refer this video : https://www.youtube.com/watch?v=LUaexTrqwUI&ab_channel=TheHimaBindu
+	
+	Disadvantage :  
+		- excessive bidirectional cross-filtering can cause Power BI to slow down
+		- The reason that overusing bidirectional relationships increases the model ambiguity lies in filter propagation.
+	
+24. Why and how would you use a custom visual file?
+	You will use a custom visual file if the prepackaged files don't fit the needs of your business. Developers create custom visual files, and you can import them and use them in the same way as you would the prepackaged files.
+
+25. What are some familiar sources for data in the Get Data menu in Power BI?
+	A few familiar data sources are Excel, Power BI datasets, web, text, SQL server, and analysis services.
+	
+26. Name some commonly used tasks in the Query Editor.
+	Connect to data
+	Shape and combine data
+	Group rows
+	Pivot columns
+	Create custom columns
+	Query formulas
+
+27. What do you mean by grouping?
+	Power BI Desktop helps you to group the data in your visuals into chunks. You can, however, define your groups and bins. For grouping, use Ctrl + click to select multiple elements in the visual. Right-click one of those elements and, from the menu that appears, choose Group. In the Groups window, you can create new groups or modify existing ones.
+	
+28. What is query folding in Power BI?
+	-Query folding is used when steps defined in the Query Editor are translated into SQL and executed by the source database instead of your device. It helps with scalability and efficient processing.
+	
+	-For some data sources, such as relational databases, but also non-relational data sources, for example, OData, AD, or Exchange, Mashup engine is able to “translate” M language to a language that the underlying data source will “understand” — in most cases it’s SQL.
+	
+	-By pushing complex calculations and transformations directly to a source, Power Query leverages the capabilities of the robust relational database engines, that are built to cope with large volumes of data in the most efficient way.
+	
+	-That ability of Power Query’s Mashup engine to create a single SQL statement combining all M statements behind your transformations is what we call Query folding.
+	
+	-Or, let`s make it simple: if the Mashup engine is able to generate a single SQL query that is going to be executed on the data source side, we say that the query folds.
+	
+	-Data sources that support Query folding
+	As already mentioned, the most obvious beneficiary of query folding is relational database sources, such as SQL Server, Oracle, or MySQL. 
+	
+	-Scanario : Suppose you are transforming your data in power query, like removing columns, filtering columsn, renameing columns, so in backend, M language is getting created which is storing the steps. So If the engine is able to combine all the M language steps and translate into a language with the data source understands(Mainly SQL), then we can say our query folds.
+	
+	-right click on the transofrmation steps that are being stored -> view native query
+	
+	-Refer video : https://www.youtube.com/watch?v=1cuzZ0XA1uA&ab_channel=TheHimaBindu
+	
+29. Filter context vs Row context
+	Filter context: Filters the data model
+		- A cell in a table(visual) can be affected(filtered) by grouping, filter on visual/page , slicer etc.. so that is called filter context
+	
+	Row context : iterates the table
+		- suppose we have a table (sales) 
+			- DAX FORMULA : revenue = sales[units sold] * sales[unit price]
+			- so this forumal will iterate row by row and calculate the revenue so this is called row context
+			
+30. Components of Power BI
+	1. Power Query : Used for data cleaning
+	2. Power Pivot : Used for Data Modelling
+	3. Power View : Used to visualize charts and graphs
+	4. Power BI Desktop : Free Power BI desktop application
+	5. Power BI Map : It helps to create a geographical representation of your data
+	6. Power BI Service : With the help of which we publish our report in power bi server.
+
+31. What is Incremental Refresh in Power BI
+	Incremental refresh will allow you to refresh only newly added data normally when we click on refresh on power bi, it will load everything and if you have a big table, it will take a long time so we don not want that. We just want to load newly added data in the existing data and how we can do that, is by incremental refresh.
+
+	You can improve the speed of refresh for long tables by using incremental refresh. This setting will apply once you have published a report to the power bi server.
+	
+32. CORR function
+	CORR is a correlation function that provides a correlation between two distinct values ranging from -1 to 1
+
+
+33. How to group different columns in a dataset
+	It can be achieved using DAX function - SUMMARIZE()
+
+34. Difference between SUM() and SUMX()
+SUM()
+	- Return Scalar value
+	- Works at column level
+	- No expression allowed
+	
+SUMX()
+	- Return Scalar value
+	- Works at row level
+	- Expression allowed
+	
+We use SUM() and SUMX() for creating measures
+for example we have a table sale with columns Amount , Tax
+
+SUM : Amt = sum(sale[Amount])
+SUMX : Amt SUMX(sale , sale[Amount] + sale[Tax])
+
+Now you can visualize SUM() result on a card
+and you can visualize SUMX() result on a table 
+
+
+
+35. Difference between Group BY vs Summarize
+	GroupBy ()
+	- Used to extract data from table
+	- GroupBY can't do implicit calculation
+	- Must to use CurrentGroup() function
+	
+	Summarize()
+	- Used for extract data from table
+	- Summarize can do implicit calculation
+	- No need to use any helping funciton for calculation
+	
+	Refer this video : https://www.youtube.com/watch?v=tQyH5aSmbVE&ab_channel=TeachToEach
+
+
+
+36. What is data alerts or Data-Driven Alerts in Power BI
+	Alerts work on data that is refreshed , when data is refreshed, BI looks for an alert and if it reaches the alert threshhold or the limit then the alert will be triggered
+
+	STEPS: 
+	- Possible on power bi dashboard only
+	- manage alert
+	- add a rule
+	- give a condition
+
+
+37. Data Source Filter
+	It is a parameter to filter data before loading it into the machine
+
+
+
+38. Difference between distinct() and values()
+	Both are same but distinct() calculates the NULL values but values() will not.
+
+
+
+39. What is WHAT-IF Parameter in Power BI
+	When we want to see the visualization based on a scenario, the best way is to use the what-if parameter.
+	
+	It could help with forecasting data and doing Advance Analytics.
+
+40. What is Content pack in Power Bi
+	The content pack can have a dashboard, report and relevant database which can be shared across the client.
+	When we want to send the dashboard to the client, we make a content pack like we have to put the report, the relevant source database, and dashboard at one place. It like like a ZIP file in Power BI.
+
+41. What is Embedded Code
+	In Power BI, there is a option where we will generate a link address for the Power BI Report. This link can be shared accross to the client or end users.
+
+42. What is Power BI Gateway?
+	When we move our data from an on-premise data source to the cloud, it needs power bi gateway to move the data from premises data source to cloud securely.
+
+43. What is power bi service?
+	Power BI Service is a cloud based service which helps us to publish the power bi report and share it with the client.
+	
+44. Difference between Measure and Calculated column
+	Measure :
+		- It is a calculated value
+		- It works on Column Level
+		- It is suitable for numerical values only
+		- It will not take space unless it is used
+		
+	Calculated Columns :
+		- It is a calculated field
+		- It works on Row Level
+		- You can create a Calculated column for both numerical and non-numerical column.
+		- It will take space when it will be created
+			
+			
+Q. connect to a database and add a refresh 
+Q. learn about the functionalities of power query
+Q. How to create active and inactive relationships
+Q. Difference between reports and dashboards
+
+
+--- Quora Power BI Interview tips--------------------
+1.DAX-You need to be good in dax.Have to familiar with common dax formulas like calculate,sum,sumx,filter,time intelligence formulas etc
+
+2.visualizations-One of the main interview qn is what are the custom visuals u uave used and why.u shud have good knowledge in basic visualisation options
+
+3.power bi concepts-row level security,app workspaces,power bi embedded, capacity concepts,live vs imported connections etc.
+
+Note-some companies they will definitely give u various scenarios to see how good ur logics are.
+
+---
+
+1. Is it possible to join two unique data sources in the same Power BI dashboard?
+2. Can we refresh data when a Power BI report is published in the cloud?
+3. Name some different types of refreshing data in Power BI
+4. Between two tables, can we create multiple dynamic connections?
+5. In an organization, how can we secure some confidential data in Power BI?
+6. What are some common data shaping techniques?
+7. How to hide and unhide a specific report in Power BI?
+8. Why is the TOP N function not available for page-level filters?
+9. Why CALCULATE and CALULATETABLE functions are unique?
+10. What is Query folding/collapsing in Power BI?
+11. What is x-velocity in Power Pivot?
+12. How many active relations can we have between two tables in Power Pivot?
+13. What is the limitation of Power Pivot over Power Query?
+14. What is Power Map?
+15. What are the primary data requirements for using Power Map?
+16. What is z-order in Power BI?
+17. What are the processes of dynamic filtering?
+18. How to compare target and actual value in Power BI?
+19. What is self-service business intelligence?
+20. How is the Schedule Refresh feature designed to work?
+21. What is the advanced editor?
+22. How do you troubleshoot errors or issues that arise in Power BI reports?
+23. How do you stay current with updates and new features in Power BI?
+24. How do you connect to data sources in Power BI?
+25. Can you walk us through the process of creating a report in Power BI?
+26. How do you handle missing or duplicate data in Power BI?
+
+
+
+---
+
+Q. What are the most common DAX Functions used?
+
+Ans: Below are some of the most commonly used DAX function:
+
+SUM, MIN, MAX, AVG, COUNTROWS, DISTINCTCOUNT
+IF, AND, OR, SWITCH
+ISBLANK, ISFILTERED, ISCROSSFILTERED
+VALUES, ALL, FILTER, CALCULATE,
+UNION, INTERSECT, EXCEPT, NATURALINNERJOIN, NATURALLEFTEROUTERJOIN,
+SUMMARIZECOLUMNS, ISEMPTY,
+VAR (Variables)
+GEOMEAN, MEDIAN, DATEDIFF
+
+Q. How would you create trailing X month metrics via DAX against a non-standard calendar?
+
+Ans: The solution will involve:
+
+CALCULATE function to control (take over) filter context of measures.
+ALL to remove existing filters on the date dimension.
+FILTER to identify which rows of the date dimension to use.
+Alternatively, CONTAINS may be used:
+
+CALCULATE(FILTER(ALL(‘DATE’),…….))
+
+Q. What are the primary requirement for a table to be used in Power Map?
+
+Ans: For a data to be consumed in power map there should be location data like:
+
+Latitude/Longitude pair
+Street, City, Country/Region, Zip Code/Postal Code, and State/Province, which can be geolocated by Bing
+
+Q. The following pages provide details about different visualizations available in Power View:
+
+Charts
+Line charts
+Pie charts
+Maps
+Tiles
+Cards
+Images
+Tables
+Power View
+Multiples Visualizations
+Bubble and scatter charts
+Key performance indicators (KPIs)
+
+Q. What is data management gateway and Power BI personal gateway?
+
+Ans: Gateway acts a bridge between on-premises data sources and Azure cloud services.
+
+Personal Gateway:
+
+Import Only, Power BI Service Only, No central monitoring/managing.
+Can only be used by one person (personal); can’t allow others to use this gateway.
+On-Premises Gateway:
+
+Import and Direct Query supported.
+Multiple users of the gateway for developing content.
+Central monitoring and control.
+
+Q. How is data security implemented in Power BI ?
+
+Ans: Power BI can apply Row Level Security roles to models.
+
+A DAX expression is applied on a table filtering its rows at query time.
+Dynamic security involves the use of USERNAME functions in security role definitions.
+Typically a table is created in the model that relates users to specific dimensions and a role.
+
+Q. What are many-to-many relationships and how can they be addressed in Power BI ?
+
+Ans: Many to Many relationships involve a bridge or junction table reflecting the combinations of two dimensions (e.g. doctors and patients). Either all possible combinations or those combinations that have occurred.
+
+Bi-Directional Crossfiltering relationships can be used in PBIX.
+CROSSFILTER function can be used in Power Pivot for Excel.
+DAX can be used per metric to check and optionally modify the filter context.
+
+Q. Why might you have a table in the model without any relationships to other tables?
+
+Ans: There are mainly 2 reasons why we would have tables without relations in our model:
+
+A disconnected table might be used to present the user with parameter values to be exposed and selected in slicers (e.g. growth assumption.)DAX metrics could retrieve this selection and use it with other calculations/metrics.
+A disconnected table may also be used as a placeholder for metrics in the user http://interface.It may not contain any rows of data and its columns could be hidden but all metrics are visible.
+
+Q.  What are the differences between a Power BI Dataset, a Report, and a Dashboard?
+
+Ans: Dataset: The source used to create reports and visuals/tiles.
+
+A data model (local to PBIX or XLSX) or model in an Analysis Services Server
+Data could be inside of model (imported) or a Direct Query connection to a source.
+Report: An individual Power BI Desktop file (PBIX) containing one or more report pages.
+
+Built for deep, interactive analysis experience for a given dataset (filters, formatting).
+Each Report is connected to atleast one dataset
+Each page containing one or more visuals or tiles.
+Dashboard: a collection of visuals or tiles from different reports and, optionally, a pinned.
+
+Built to aggregate primary visuals and metrics from multiple datasets.
+
+
+Q. What are the three Edit Interactions options of a visual tile in Power BI Desktop?
+
+Ans: The 3 edit interaction options are Filter, Highlight, and None.
+
+Filter: It completely filter a visual/tile based on the filter selection of another visual/tile.
+
+Highlight: It highlight only the related elements on the visual/tile, gray out the non-related items.
+
+------------------------------------------------------
+
+EY Interview
+Intro : 
+	Myself - client - domain - skills - day to day work(end to end report development and maintenance)
+	We try to gather insurance data from the on-premises database - try to do the ETL process - and try to report them on a business application example : How the business is growing, which type of insurance works/ doesn't work, which country/region is performing good/not good, so this type of analysis we will be doing and these reports will be used by end users as well as the senior management of our company.
+	
+INTERVIEWER: what all sources have u connected
+>> in the current project, I have connected Microsoft SQL Database, connected using the import mode. Apart from this, i also have experience loading data from different data sources like csv, excel, folder, json, xml.
+
+INTERVIEWER: Difference between Import query mode and direct query mode
+>> IMPORT QUERY MODE:
+So both are used for loading data. One important feature of import mode is power bi will have some storage space, so you are trying to bring data to power bi and you will have complete access to the data , and you can create any modelling, like star schema or snowflake schema, u can work with DAX function, Time intelligence function. So with everything you can work in import mode.
+The disadvantage of import query mode is that if the data keeps increasing , PBIx file might not be able to contain all the data as PBIX file cannot contain more than 1gb of data.
+
+DIRECT QUERY MODE: 
+>> in this, we are accessing the source table via query(SELECT * from TABLE), So the whole table data will be accessible but we will not see the copy of the data in your power bi.
+The Advantage of this is you can connect with an unlimited-size data source.
+But some disadvantages are we cannot use some time intelligence functions, some advanged dax functions, you cannot go and write calculated columns, and also we will not be able to create a schema as well.
+
+Both has pros and cons, so depending on the usage of the business, we can chose the right way of importing.
+
+INTERVIEWER : Can you explain the roles you played in your project like gathering data, transformation, writing dax queries , charts..
+>> So i had the opportunity to work on end to end requirements, right from gathering of data. my current client didn't give me the table name or columns and just discussed and handed the business requirements, so it was challenging to figure out the right data , and i implemented snowflake schema, as it is an easy one compared to other. 
+
+After fetching the data, i had to do alot of transformation like text transformation, column transformation, date transformation, number transofrmation, also merged and appended the tables as well.
+
+And coming to charts, i am a specialist in charts because i know which data should be visualized with what charts. Starting with column chart, pie chart, donut chart, cards, multicards, and i have spent alot of time to figure out which chart to use for which data so i am comfortable with this. 
+
+Also i was the only person who was given premium access so i was able to publish the data,create RLS, setup schedulers, so i have had experienced all the phases of power bi.
+
+But in my previous project,we had dedicated person for each and every model. I was a part of the Power BI charts team.
+
+INTERVIEWER : As you are a good storyteller, can u tell me what charts have you used apart from default charts like have u used any custom charts.
+>>So usually whenever you want to use a custom charts, you will have to get it from the APPS SPACE, lik eyou cannot get it directly, only premium access or organization account.
+Charts used like infographic charts, scoller, Word Cloud, Drill down column charts. Here also there are some rules like we can only use it if its approved by power bi, so your reports dont get hampered.
+
+INTERVIEWER : Have u used sankey chart in customs chart.
+>> to compare two categorical variables
+
+INTERVIEWER : Tell me a scenario where you have used ribbon chart
+>> Ribbon chart is an extended verison of column chart, the only difference is it is extension of stacked column chart. in stakced column chart, with respextive of the order it will be giving multiple blocks, but in case of ribbon, what happens is you get ..............
+
+INTERVIEWER : Have you worked in conditional formatting
+>> it comes under tables and metrics. 
+
+
+INTERVIEWER : I have a scanario where i want to compare this year sales with last year sales from 2022(november to december) and 2021(nov to dec).
+>>DATESBETWEEN (but not that great)
+>>Function name 'SamePeriodLastYear' usage 
+>>ParallelPeriod function 
+
+-Creating a measure : Same_Period_Last_year_covid_cases = CALCULATE(SUM(Covid[Cases]) , SAMEPERIODLASTYEAR(Calender[Date]))
+
+- Creating a meausre : Parallel_Last_month = CALCULATE(SUM(Covid[Cases]) , PARALLELPERIOD(Calender[Date]),-1,'MONTH')
+
+The most common difference between SAMEPERIODLASTYEAR and PARALLELPERIOD is : 
+PARALLELPERIOD has a arguement for an interval like MONTH, YEAR etc.. so it is not flexible
+on the other hand, SAMEPERIODLASTYEAR is flexible with any interval like MONTH or YEAR etc..
+The flexibility that PARALLELPERIOD brings is:
+Unlike SAMEPERIODLASTYEAR, PARALLELPERIOD provides flexibility to compare data between different time periods, not necessarily limited to the previous year. It allows you to shift the time frame by a specified number of intervals, such as weeks, months, or quarters. For instance, if you want to compare sales in May 2023 with sales in February 2023, you can use PARALLELPERIOD to go back three months and retrieve the data for that period.
+
+
+REFER for sameperiodlastyear: https://www.youtube.com/watch?v=rw_9ovW7mFw&ab_channel=TheHimaBindu
+REFER for parallelperiod: https://www.youtube.com/watch?v=rw_9ovW7mFw&ab_channel=TheHimaBindu
+
+
+INTERVIEWER : Have you worked with SUM and SUMX functions
+So SUM() can be used when the column already exists, it is a column level function. On the other hand, SUMX can be used when some arithmetic operations needs to be done with multiple columns. like suppose We need to add revenue and tax but client doesnn't want us to make a new column, so in this case, we can use SUMX(). SUMX is row-level function
+
+INTERVIEWER : Difference between ALL() and ALLX(). Also can you tell me any scenario where you have used this one.
+ALL , ALLX are all are combination of filter function. 
+Usually when we make a visualization and if the page alreadt contains a page-filter , then the visualization will also get filtered. But if we use ALL function, it will get rid of any filteration that is added in page level or report level.
+
+ALLX() : ALLX() is same like ALL() , except the column which you select in ALLX(), excluding that, for all the other columns the filtering will be applicable.
+
+INTERVIEWER : M Language(Power Query)
+>>M language is Mashup language/Code, so whenever we perform any transformation like drag and drop,  remove column, change datatype, group by so these steps needs to be recorded at the backend. So whenevr we perform such transformation, it gets recorded in the backend in M language.
+
+INTERVIEWER : So what all transformations have you performed?
+>> star schema , snowflake schema, text transformation, number transformation, date formatting, additional columns, appending and merging of queries.
+
+INTERVIEWER : Difference between STAR and SNOWFLAKE schema
+>> two tables will be involved : FACT Table and DIMENSION Table
+>>Fact Table will have actual client information like sales, profit ,cost..
+>>Dimension table can be called as lookup table like a customer will have a unique id, So for every customeryou will have one one record.
+>>When every dimension table is connected to a FACT table, you can call it as a star schema.
+>>For SNOWFLAKE schema, some DIMENSION Table might be having another DIMENSION table like SUB-DIMENSION table. Or i can put it this way that a FACT table can be connected to a DIMENSION table indirectly.
+
+INTERVIEWER :  you must have worked on SQL and you have used direct query mode. Type of Joins. Also give me a scenario where you have used JOINS.
+
+INTERVIEWER : DENSE RANK function
+
+INTERVIEWER : What are the challenges you have faced in your project. Also you have built many reports, so how many reports have u built around 5-6 reports and 2-3 dashboards.
+>>Gathering data was very challenging because we never received straight forward data from my client. so we had to search and understand from where the data is coming, you need to understand the business and you need to take the right data. Also clients used to provide certain calculations which we had to write as DAX so we had to work on a single calculation for 2-3 days.
+>>We also performed performance tuning by using proper power query transformations for optimazation.
+
+INTERVIEWER : Is there any complex report you have built, and if you received any appreciation from the client.
+>> infographic graphs symbols
+
+INTERVIEWER : So how do you provide access of reports or dashboards to users, like have you implemented any row level security.
+>> we have implemented static and dynamic row level security.
+>>We can also give workspace access like viewer access/ contributer access/ member access/ admin access.
+>>We can also use microsoft teams or outlook to send them.
+>> App level access.
+>>My manager had admin access and he gave me contributer access.
+
+INTERVIEWER: Have you worked on BOOKMARKS/ACTIONS/BUTTONS
+>>They wanted the reports to be dynamic, like if you click something, something should happen. like rather than having a static or filter/ slicers page, they wanted a dynamic way where BOOKMARKS can be useful.
+So the moment you click a bookmark, you can have selected visuals.
+
+INTERVIEWER: How do u keep urself updated with new power bi new updates, as every month they keep on updating power bi
+>>go through documentation
+>>but again its difficult to keep update every month and clients might not accept every update. but I do lots of POC's.
+
+INTERVIEWER: What kind of roles can i expect here like any challenges or any specific role based i can expect here?
+
+EY Questions
+1.  Import vs Direct Query mode.
+2.  Roles played.
+3.  Custom charts :  Infographics, Scroller, Word cloud, Drill down column charts.
+4.  Sankey chart :  To compare two categorical variables.
+5.  Ribbon chart :  Extended version of column chart.
+6.  Conditional formatting.
+7.  Time intelligence functions :  Function name 'SamePeriodLastYear'
+8.  SUM and SUMX
+9.  All and AllX
+10.  M-Language? Mashup code.
+11.  Star and Snowflake schema
+12.  Types of JOINS
+13.  Dense Rank function
+14.  Challenges faced :  Data gathering
+15.  RLS
+16.  Bookmarks
+17.  How do you update yourself?
+18.  Questions for the Interviewer?
+
+-----------------------------------------------------------------------------------------------------------
+MindTree Power BI Interview
+
+
+-----------------------------------------------------------------------------------------------------------
+CAPGEMINI Power BI  Interview
+
+
+
+-----------------------------------------------------------------------------------------------------------
+BIG 4 POwer BI Interview
+1. Suppose you are in power query editor, and you have two or more queries that you want to appened. So what should be the minimal conditions to append those queries.
+
+>>>In those tables the below conditions should match
+	- number of columns should be same
+	- column name should be same
+	- column datatype should be same
+
+2. Have you heard about query folding
+
+3. Suppose you have a column with datatype NUMBER which conatins values like 20220227 , 20210418. These are date values but the column thinks of them as number. How will you convert them as date.
+>>> Load your data into Power Query Editor by connecting to your data source in Power BI.
+	Select the column that contains the date values.
+	Navigate to the "Transform" tab in the Power Query Editor ribbon.
+	Click on the "Data Type" button in the "Any Column" section.
+	From the dropdown menu, select "Date/Time".
+	In the dialog box that appears, choose the appropriate date format that matches your input data. For example, if the format is yyyymmdd, you can select "YYYYMMDD" or "YYYY-MM-DD" as the format.
+	Click "OK" to apply the changes.
+
+4. I have a column which contains values like Rs.1000, 5000$ . Now i want to extract the number of these currencies so how would i do that in power query editor.
+
+5. Limitations of using a direct query mode.
+>>> Can't use TIME INTELLIGENCE function, certain transformation, custom functions. This can restrict the ability to create advanced transformation
+
+	Since Direct Query mode directly connects to the data source, the performance and availability of the data source can significantly impact the user experience.
+	If the data source experiences performance issues or downtime, it can affect the responsiveness and availability of reports and dashboards.
+	
+	Direct Query mode requires optimizing the underlying data source for efficient query processing. This optimization process can be complex and time-consuming.
+	
+	Speed of Report is much slower
+	
+	You can use tables from a single database only
+	
+	you cant connect to other cources which doesnot support directQuery
+	
+	You cannot edit your data by query editor, it will ask to switch to data import mode
+	
+	You can use query which can return up to 1 million rows only. If your query retruns more records, Power BI will throw an error
+	
+	
+6. Difference between STAR and SOWFLAKE schema
+>>> In STAR schema we can a FACT table, and all the other DIMENSION table are connected to the FACT table. There is only one relationship and that is between FACT and DIMENSION. There is no DIMENSION to DIMENSION relationship. 
+But in SNOWFLAKE schema, we can have DIMENSION to DIMENSION relationship as well.
+
+7. Suppose if you want to convert SNOWFLAKE schema into STAR schema. How will you do that.
+>> as we know that SNOWFLAKE can have relationship between DIMENSION to DIMENSION whereas STAR schema can't. So i can append those connected DIMENTIONS table using JOINS, which will make it one single DIMENTION and then i can connect it to the FACT table.
+----IT WILL CREATE A PROBLEM coz if i have product and sub product, then one product will have multiple sub products. So it wont work.
+
+I can maybe join and concatenate prodctid and subproductid, which will be a unique row. and this might work.
+
+8. Role Playing Dimensions
+
+9. What is User Relationship DAX Functions and in which scenario do we use that function.
+	>>>	The User Relationship DAX functions, including USERELATIONSHIP and CROSSFILTER, are used to define and manipulate relationships between tables in Power BI. These functions allow you to create alternative relationships between tables that may differ from the default relationships established based on primary keys and foreign keys.
+
+	Here is an overview of the two User Relationship DAX functions and scenarios where they are commonly used:
+
+	USERELATIONSHIP:
+
+	The USERELATIONSHIP function is used to create a new relationship between tables explicitly.
+	This function is particularly useful when you have multiple columns in a table that can serve as the relationship key with another table.
+	Scenario: Suppose you have a fact table and a dimension table, and there are two columns in the dimension table that can establish a relationship with the fact table. In such a scenario, you can use USERELATIONSHIP to define an alternative relationship based on the desired columns, overriding the default relationship.
+	CROSSFILTER:
+
+	The CROSSFILTER function is used to modify the filtering behavior between tables by specifying the direction of the filter propagation.
+	This function allows you to control how filters applied on one table flow through the relationship to the other table.
+	Scenario: Suppose you have a relationship between a fact table and a dimension table, and you want to control whether the filters on the dimension table should propagate to the fact table or vice versa. In such a scenario, you can use CROSSFILTER to define the desired filter propagation behavior.
+	
+	REFER : https://www.youtube.com/watch?v=oY12PLWXTg4&ab_channel=ZoomInData
+	
+	FORMULA : 
+	Creating a measure -> Total Sale for delivery date = CALCULATE([Total sales], USERRELATIONSHIP(data[delivery date], datetable[date])
+
+
+10. What kind of DAX functions have you used till now.
+- calculate, hasonevalue, count, countx, sum, sumx
+
+11. Suppose we have a requirement from the end user to find the cummulative sales for a year in the company.
+
+12. CALCULATE([Total Sales], Product='Apple') Can you optimize this code.
+
+13. Suppose you have a line chart on your report, on Y-AXIS you have total sales, on X-AXIS you have months from JAN to DEC. But the User wants the first value on Y-AXIS as APRIL and last value as MARCH.
+13. Suppose you have a line chart on your report, on Y-AXIS you have total sales, on X-AXIS you have months from JAN to DEC. But the User wants the first value on Y-AXIS as APRIL and last value as MARCH.
+
+14. Difference between RELATED and LOOKUPVALUE function
+>>> IF you are using RELATED, then it means the two tables should have a relationship between them. In LOOKUPVALUE, relationship between two tables is not needed.
+
+15. How would you differentiate COUNT and COUNTROWS function
+
+16. Suppose i m pulling total sales measure of every product and you are getting the same value for every product sales. What can be the issue and how can we rectify it. 
+>>>
+- We need to check the relationship between product table and sales table
+- If we just use SUM(), there won't be any row-level context so this can be one reason.
+
+17. Difference between ROW CONTEXT and FILTER CONTEXT
+
+18. Have you used decomposition tree visual. Can you give any use case of this visual
+
+19. Suppose you have developed a dashboard and you have published the dashboard in POWER BI Service. In how many ways can you share the report to the end user.
+>>>
+	- You can create an APP and give access to end user
+	- Deploy to a workspace and give access, but u need to have PRO level.
+	
+20. Have you implemented ROW level secutiry. Was it static or dynamic?
+
+21. Difference between User principle name and User name DAX Function.
+
+22. I have a column full name in ORACLE SQL DEVELOPER database.
+The values in the columns are
+Ankit Banerjee
+Rohini Mitra
+Rahul Shongi
+Karan Patekar
+How can i make a new column with just first name and another column with last name
+>>>
+	-- Create new columns for first name and last name
+	ALTER TABLE employees ADD first_name VARCHAR2(50);
+	ALTER TABLE employees ADD last_name VARCHAR2(50);
+
+	-- Update the new columns using the first name and last name extracted from the full name
+	UPDATE employees
+	SET first_name = SUBSTR(full_name, 1, INSTR(full_name, ' ') - 1),
+		last_name = SUBSTR(full_name, INSTR(full_name, ' ') + 1);
+
+	-- Verify the data in the new columns
+	SELECT full_name, first_name, last_name
+	FROM employees;
+
+22. Difference between UNION and UNION ALL
+
+23. When do we use HAVING clause.
+
+24. Difference between Clustered Index and Non-Clustered Index.
+
+25. What is CTE. Can you write a query using CTE to delete the duplicate values in a table
+
+26. Find the 2nd highest salary using a subquery
+
+
+-------- Random Interview Questions -------------------------------------------
+1. Difference between COUNT, COUNTA, COUNTX, COUNTAX 
+>>> COUNT() : Works on numbers and texts exclusing "Blanks" and "Boolean"
+
+	COUNTA() : Works on numbers, texts and Boolean exclusing "Blanks"
+	
+	COUNTX() : used for any filters and expression and Works on numbers and texts exclusing "Blanks" and "Boolean"
+	
+	COUNTAX() : used for any filters and expression and Works on numbers, texts and Boolean exclusing "Blanks"
+
+
+2. Difference between Max, MAXA, MAXX function
+>>> MAX will return the largest value in a column or between 2 scalar expression. MAX(EMP[Salary]) or MAX(50,100). It works with number, text , date , but not boolen datatype
+It works at column level
+
+	MAXA : Same as MAX but it works with BOOLEAN datatype but doesn't work for TEXT datatype.
+	
+	MAXX : Returns the largest value that results from evaluating a expression for each row of the table.
+	MAXX(Emp, EMP[Salary] + Emp[Bonus]) 
+	MAXX(Emp, Emp[Salary] <= 10000)
+	It works at tabular level.
+	
+3. Difference between AVERAGE , AVERAGEA , AVERAGEX function
+>>> AVERAGE : Returns the average of all numbers in a column. The row with blank is not counted here. Doesn't handle TEXT or logical values
+	
+	AVERGAEA : works like AVERAGE but handles TEXTS and Logical Values(TRUE as 1/FALSE as 0) and Empty text("") as 0
+	Values that contain non-numeric text count as 0
+	
+	AVERAGEX : you can add expressions using this function
+	
+4. TOPN DAX Function: Returns the TOP N rows of the specified table
+	
+	
+ -------------------------------------------
+
+
+---- SOME EXTRA DAX FUNCTIONS ----
+Budget % difference from Forecast = 
+VAR BASELINE_VALUE = SUM('Forecast'[Forecast])
+VAR VALUE_TO_COMPARE = SUM('Budget'[Budget])
+RETURN
+	IF(
+		NOT ISBLANK(VALUE_TO_COMPARE),
+		DIVIDE(VALUE_TO_COMPARE - BASELINE_VALUE, BASELINE_VALUE)
+	)
+
+List down important Time Intelligence Function in POWER BI
+1. TOTALYTD: Calculates the total year-to-date value for a given expression and date column. It sums up the values from the beginning of the year up to the specified date.
+
+2. SAMEPERIODLASTYEAR: Returns the equivalent period from the previous year. It helps compare values between the current period and the same period in the previous year.
+
+3. DATEADD: Adds a specified number of intervals (days, months, quarters, years, etc.) to a given date and returns the resulting date. It is useful for creating custom time comparisons or aggregating data based on different time periods.
+
+4. DATESYTD: Returns a table of dates that represents the year-to-date period for a given date column. It is often used in combination with other functions to perform calculations within the year-to-date range.
+
+5. PREVIOUSMONTH: Returns the date for the previous month relative to the specified date. It helps analyze month-over-month changes in data.
+
+6. TOTALMTD: Calculates the total month-to-date value for a given expression and date column. It sums up the values from the beginning of the month up to the specified date.
+
+7. FIRSTDATE/LASTDATE: Returns the first or last date from a given date column. These functions are useful for filtering data based on the earliest or latest date in a range.
+
+8. PARALLELPERIOD: Returns a date that is a specified number of intervals (days, months, quarters, years, etc.) away from the given date. It allows you to compare data between different time periods by shifting the dates accordingly.
+
+9. CLOSINGBALANCEMONTH/CLOSINGBALANCEYEAR: Calculates the closing balance of a specified expression at the end of each month or year, respectively. It is commonly used for calculating cumulative totals or balances over time.
+
+10. YOY/YTD Growth: These are not specific functions, but rather calculations that involve comparing values between years (YOY) or year-to-date (YTD) to analyze growth rates. They typically use a combination of functions mentioned above.
+
+TotalSales = SUM(balances[Amount])
+
+Current MTD = TOTALMTD([TotalSales],DATESMTD(balances[Dates]))
+
+Current QTD = TOTALQTD([TotalSales],DATESQTD(balances[Dates]))
+
+Current YTD = TOTALYTD([TotalSales],DATESYTD(balances[Dates]))
+
+Previous MTD = CALCULATE([TotalSales],PREVIOUSMONTH(DATESMTD(balances[Dates])))
+
+Previous QTD = CALCULATE([TotalSales],PREVIOUSQUARTER(DATESQTD(balances[Dates])))
+
+Previous YTD = CALCULATE([TotalSales],PREVIOUSYEAR(DATESYTD(balances[Dates])))
+
+SPLY MTD = CALCULATE([Current MTD],SAMEPERIODLASTYEAR(balances[Dates]))
+
+SPLY QTD = CALCULATE([Current QTD],SAMEPERIODLASTYEAR(balances[Dates]))
+
+SPLY YTD = CALCULATE([Current YTD],SAMEPERIODLASTYEAR(balances[Dates]))
+
+Q. Important differences between merge queries and join queries in Power BI:
+
+1. Merge queries combine tables horizontally, while append queries combine tables vertically.
+2. Merge queries require at least one matching column in each table, while append queries require matching columns with the same data types.
+3. Merge queries can combine tables with different numbers of columns, while append queries require tables to have the same number of columns.
+4. Merge queries can be used to create new columns based on the matching values, while append queries do not create new columns.
+
+
+
+Q. What is incremental Refresh
+
+1. Suppose you have a 10 years of historical data and you want to update last 3 months of data. If you perform the normal schedule refresh then it would refresh the whoel dataset, which is not efficient in this case as the update data is just for 3 months. So we can use incremental refresh and it will partition the historical data and the newly updated data and refresh only the newly updated data.
+
+Incremental refresh only works will Import mode , it doesn't work with Direct Query mode
+
+1. Tranform Data -> Manage Parameter -> Create new parameter
+2. Remember you will have to create 2 paramenter step name (RangeStart and RangeEnd).
+3. Type should be Date/Time -> Suggested values can be anything -> CurrentValue (depends on from which date you want the incremental refresh , for example (01-01-2019 00:00:00) and for RangeEnd = 31-12-2019 00:00:00
+4. Then go to the table, click on the filter of the date for which you have created parameters -> Date/Time Filters -> Custom Filters ->
+5. Select ->
+	"is after or equal to" -> RangeStart
+	AND
+	"is before or equal to" -> RangeEnd
+6. "Close and Apply" the power query
+7. Right click on the table -> select incremental query -> Turn on the "Set import and refresh ranges"
+8. Add archiving data (how many years | months | days of data do you want) and incrementally refresh data starting(like how many days of data do you want to refresh)
+9. After this, publish your report and schedule refresh normally 
+
+
+Note: Incremental Refresh only works with Import Query Mode
+
+
+----- Important BI Functions and Questions -----
+https://medium.com/edureka/power-bi-interview-questions-62df7e5b2b8a
+https://medium.com/predict/power-bi-interview-questions-answers-part-1-7c98f1b9a404
+https://medium.com/analytics-vidhya/interview-questions-dax-in-power-bi-part-2-b5e489e0dc5e
+https://medium.com/geekculture/interview-questions-dax-in-power-bi-part-3-d6576daa1a5b
+https://medium.com/analytics-vidhya/interview-questions-dax-in-power-bi-part-4-9dad2f80dd2c
+https://medium.com/predict/interview-questions-dax-in-power-bi-part-5-adbfc4a0fca1
+https://elias-nordlinder.medium.com/15-power-bi-interview-questions-concepts-b8a935d17bd9
+https://medium.com/predict/how-to-use-lookupvalue-selectedvalue-related-values-functions-dax-in-power-bi-chapter-18-41927cde64ea
+
+TOPN()
+ALL ()
+ALLEXCEPT()
+ALLSELECTED()
+CALCULATE()
+CALCULATETABLE()
+CALENDAR()
+CALENDARAUTO()
+
+What are the foremost common DAX Functions used?
+
+Below are a number of the foremost commonly used DAX function:
+• SUM, MIN, MAX, AVG, COUNTROWS, DISTINCTCOUNT
+• IF, AND, OR, SWITCH
+• ISBLANK, ISFILTERED, ISCROSSFILTERED
+• VALUES, ALL, FILTER, CALCULATE,
+• UNION, INTERSECT, EXCEPT, NATURALINNERJOIN, NATURALLEFTEROUTERJOIN,
+SUMMARIZECOLUMNS, ISEMPTY,
+• VAR (Variables)
+• GEOMEAN, MEDIAN, DATEDIFF
+
+
+
+---- TCS Power BI Interview Questions ----
+
+1. What is SSRS?
+
+2. Where is the data stored in Power BI?
+
+3. Is there any performance impact if you switch to direct query mode?
+
+4. Is there any way to improve the performance of the direct query mode?
+
+5. Can we use aggregation to improve the performance
+
+6. What are joins and its types.
+
+7. What is Merge in SQL?
+
+8. Is there any pre-requisite for appending rows in Power BI
+
+9. What is a view?
+
+10. Can we update a view? If yes then will it affect the table
+
+11. What is trigger
+
+12. Have you configured any power bi report after deployment to power bi service?
+
+13. On developement enviroment, you are connected to dev database and you have published the report on dev workspace. Now i want you to publish the same report in production workspace, So what is our appraoch? Currenty you have a dev pointed report so what will you do now?
+>>In new version, their is a cocept called deployment pipeline, maybe we can take help of that.
+
+14. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

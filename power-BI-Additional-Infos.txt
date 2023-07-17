@@ -1,0 +1,189 @@
+------------------ END TO END DASHBOARD ----------------------------------------------------------------------------------------------------
+- To load data from a folder containing 50+ .csv files (https://www.youtube.com/watch?v=QGqn4hWAhBM&ab_channel=PavanLalwani)
+Steps:
+1. get data -> more -> folder -> paste the folder path ->  choose "combine and transform [OR[ combine and load"
+2. Now suppose you added an extra csv file or changed a data in some existing file in the folder, to fetch the new data go to HOME -> REFRESH
+3. Remember REFRESH can also be automated when we PUBLISH
+
+- To quickly create charts
+STEPS:
+1. Double Click + write "Order_date sales line" and click OK
+2. It will create a line chart with date as X-AXIS and Sales as Y-AXIS
+
+- To get data from outlook mail attachments
+STEPS: 
+	- create a folder in outlook and create a rule to group those mails with attached sheet and push them into the folder
+	- open Power BI -> get data -> exchange -> write your corporate mailid -> select microsoft account and login -> select mail -> import data
+	- after importing, the power query editor will open and show a tabular format of your emails.
+	- the first column will be named "folder" where you can sleect the folder which you have created"
+	- Suppose the mails header be "IKEA inventory data - June 2022" for June month
+	- Now i want just 2022 data , so i will go in description column -> text filter -> contains 2022 (this will filter out all mail header names which doesn't have 2022)
+	- now select the "ATTACHMENT" column -> right click -> remove other columns (We are only interested in the attachments)
+	- Expand the attachment column -> click okay -> filter "EXTENSION" column and select .csv files only
+	- All the data is hidden in "ATTACHMENT CONTENT" column -> so right click on that column -> remove other columns
+	- Now we need to write a function to extract the contents so -> go to "ADD COLUMN" -> CUSTOM COLUMN ->
+		-> CUSTOM COLUMN FORMULA : Excel.workbook[(ATTACHMENTCONTENT)]
+	- NOTE : For csv , formula would be csv.document | pdf.tables | json.document
+	- After creation of the custom column, remove the "ATTACHMENTCONTENT" column and expand the custom column
+	- now keep the DATA column and remove the other columns and expland the DATA column
+	- now each sheet would repeart the column names so - click on remove rows -> remove errors
+	- NOTE : Remember if we get a new mail with the similar header with "2022", that data would be appended again
+	
+	
+	
+	
+-- VISUALS:
+Stacked AREA CHART : If i want to show the sales/revenue of each year (year as x | revenue as y) and legend as REGION, i will use this chart or LINE CHART
+					You can click is "expanding down of hierarchy" column to quarters, month,
+					
+- Map : for geographical data like state wise sales, region wise sales, country wise revenue
+- COLUMN chart : If i have product family and its sales/revenue, i can use this chart
+- Pie chart : Sales by Region
+- Donut chart : Sales by Product Segments
+
+For custom chart -. click in visual gallery -> get more visuals -> you can search (drill through , scroller)
+- you might have seen scroller in sensex, stocks, news , marketing channels
+- add state , sales in scroller and it will scroll horizontally each state and sales 
+
+
+
+- To send the reports daily/weekly/monthly to your stakeholders
+STEPS:
+1. click on subscribe to report -> fill the email ids of your clients/stakeholders -> chosse the frequency(daily, weekly)
+2. in weekly section you can choose which days to send, like you can exclude saturdays and sundays
+3. You can choose a time at which the report should be sent
+4. In this, you can also provide subject / comments 
+5. Subscription only works on one page, so if u want to send multiple pages, you need to perform this same subscription on all the pages
+6. While sending , the clients will get an image preview, link to this report, and permission to access the report
+
+- So if we get a new mail with a new attachment, and you want those to reflect on your published report, you need to do this
+STEPS:
+1. go to your workpace -> click on three dots beside your dataset(not report) -> settings -> data source credentials -> edit credentials -> sign in -> done
+2. After getting a new mail -> go to workspace -> click on refresh icon beside your dataset(not report)
+3. refreshing your dataset will refresh the report
+
+NOTE : we performed the above steps so power bi can access my email attachments
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------ AUTOMATIC REFRESH : DATA GATEWAY --------------------------------------------------------------------------------------------------------------
+https://www.youtube.com/watch?v=kdaolMKsSOA&ab_channel=PavanLalwani
+
+Q. How to Schedule a refresh in power bi?
+	1. After publishing the data, go to power bi service
+	2. Click on dataset (Whenever we publish the report, the dataset also gets published)
+	3. In the dataset section you can see (Actions | refreshed date)
+	4. To manually refresh it , click on refresh icon on the Action column
+	5. You can get a error massages like "Refresh failed due to gateway configuration issues", "This dataset requires a properly configured gateway in order to refresh"
+	6. To install a gateway, go to gateway connection in power bi service and click "Install Now", if you are in company you don't have to do that as it will be done by your admin.
+	7. so after downloading the gateway, you will now be able to refresh the data
+		a. you can get an error after doing the refresh, so if you go to the dataset setting, you will see error with "Wrong creds" even though your data source is excel and it doesn't have any credentials
+		b. so in this case, just select None in the creds field
+	8. After installation, you will see the gateway connection running properly with the status.
+	9. Scheduling refresh
+		a. Switch it on
+		b. Choose a refresh frequency (Daily | Weekly)
+		c. TimeZone
+		d. Provide Time
+		e. Click on Apply
+		f. Optional : You can mention Email(this will email these users when refresh fails)
+	10. Note : -A refresh can be schedules 8 times a day per dataset in PRO account
+				-in premium account , you can schedule request 48 times a day per dataset
+				
+Q. Mention scenarios when a refresh fails
+
+
+Q. What is this Gateway connection and why is it important(How to add gateway)
+	https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-data-sources
+
+
+Q. How to use drill-through
+	REFER : https://www.youtube.com/watch?v=k-uWcjbLv0E&ab_channel=PavanLalwani
+	
+	Suppose you have a dataset for furniture.
+	You have created a table (CATEGORY, SALES)visual on page 5 in report view.
+	You put the CATEGORY column in page 5 in Drill-Through Field.
+
+	Now, come to page 1(the main page)
+	1. click on visual
+	2. right click on that visual (a bar in the bar chart)
+	3. click on "Drill Through" -> then select the page in your reports(lets assume the name of the page is "Page 5")
+	4. As soon as you do that, you will see changes done in Page 5 visuals which contain "CATEGORY"
+	
+	Definiton : Drillthrough in Power BI is like an indicator used to focus on a specific type of data or a specific type of value generated or displayed in a report.Therefore, it is very helpful when a business user has to focus on only certain elements rather than the whole portion of data.
+	
+Q. How to perform Visual level filtering, Page level Filtering, Report level filtering(All page filtering) in power bi
+
+Q. How to publish a report in power BI and import it as PDF
+
+Q. How do you send your reports to users and What are the ways to send them or give them access to the reports
+
+Q. How to Implement Row level security (Statis | Dynamic)
+	# Row-level security (RLS) is one of the approaches used in Power BI to control access to data reports. Row-level security is applied to rows in a table and, thus, a horizontal limitation that controls data visibility.
+
+	# Suppose you have a table (Product Name | Location | Sales). Now if you want the users of each location to see only the data of that location only, you will have to implement row level security on LOCATION column.
+	
+	# Two types of Row Level Security
+	1. Statis level 
+	2. Dynamic level
+	
+	#Suppose you have already created visuals in report view
+	
+	#Static row level security means when we have fixed scope for the users. Suppose we create a role for NEW DELHI location, and we can assign those roles to multiple users, so those users willl be able to see only NEW DELHI data.
+	
+	# How to apply static row level security
+		1. Go to "Modelling -> in the Security , click "Manage Roles"
+		
+		2. Create a Role -> name it maybe "New Delhi Location"
+		
+		3. under Tables section ->  click on the three dots(...) on the table -> Add filter -> Choose the column you want to filter (LOCATION)
+		
+		4. Put DAX Expression 
+		([Location] = "New Delhi")
+		
+		5. Similarly you can make multiple roles for multiple locations.
+		
+		5. Now role is created, to check this we will click "View As" in security panel -> select "New Delhi" role.
+		Example : [Location] = "New Delhi" || [Location] = "Mumbai".
+		So now the user will be able to see both New Delhi and Mumbai Location data.
+		
+		6. Now publish this report into power bi service -> HOME -> PUBLISH
+		
+		7. Go to your workspace -> Dataset -> right click on 3 dots(...) beside your dataset -> click on "SECURITY"
+		
+		8. Now you will see the roles you have created in the left, and you will get option to add members(Using their email) on right for those roles.
+		
+		9. So when that user(who mail is added in that role), logs into power bi and check dashboards under "Shared with me", hw will be able to see the location wise filtered data.
+		
+		10. To see how the user will be able to see the data(visual), go to the role -> click on three dost(...) -> TEST AS ROLE
+		
+		
+	# How to apply dynamic row level security
+		#Def : To DO Dynamic RLS , we need to see who is Logged in (USERPRINCIPALNAME()) and what access they have(Access management table)
+		
+		#Suppose you have a long list of location and emails. It would be difficult to create it in static manner. Also it would be difficult if you want to revoke the access
+		
+		# Suppose you have a access management sheet|table (User Email ID | Location) which contains all the email id of the users with their respective locations.
+		
+		#Make sure the relationship is fine between your actual table data and access management table data in data mondelling
+		
+		#No go to Modelling -> Manage roles -> create a new role "Limited Location Access" 
+		
+		DAX expression: 
+		[User Email Id] = USERPRINCIPALNAME()
+		
+		# USERPRINCIPALNAME returns the name of your desktop in power bi desktop, but once you publish it, it will show your email id in oower bi service.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+

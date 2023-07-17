@@ -1,0 +1,207 @@
+Links : 
+https://hevodata.com/learn/dax-functions/#T1
+https://absentdata.com/power-bi/10-dax-most-useful-power-bi-functions/
+
+Key Features of DAX Functions
+DAX library has the following key features:
+
+Measures: DAX Functions contain formulas called Measures to carry out dynamic calculations. These Measures have the property of modifying their results according to the context and you can define your Measures via the DAX formula bar. Measures also provide you the flexibility to shift between tables without suffering from any functionality loss.
+Calculated Columns: DAX library offers Calculated Columns to store computational results of your data operations. These operations usually involve 2 or more columns and are done during a data refresh. Furthermore, these Calculated Columns are designed to perform row-level computations and based on them, generate a new column containing the output.
+Row-level Security: DAX Functions always maintain the row-level security of your data tables. To ensure this, a DAX evaluation always provides a boolean result only (True or False). This way only one-row set is allowed at once and no other users are allowed to access the row that was assigned. On top of this, DAX functions also use filters to preserve the currently active relationship.
+
+--- Important Power BI Functions
+
+1. SUM (Column Name)
+
+2. SUMX (Table, Expression)
+Suppose you want to compute sales revenue by multiplying the order quantity by unit price. This means that you have to compute a column which calculates [unit price] * [order Qty] and then adds the result using SUM (). This 2-step process can be easily done in a single step using SUMX ().
+
+3. AVERAGE (Column Name)
+
+4. AVERAGEX (Table Name, Expression)
+Just like SUMX the AverageX computes the average of an expression. This saves extra steps of computing the total and then take the average.
+
+5. MIN (Column Name) or MIN (expression1, Expression2)
+
+6. MAX(<column>) or MAX(<expression1>, <expression2>) 
+
+7. CALCULATE(<expression>, <filter1>, <filter2>…)
+The CALCULATE function is a very important function in Power BI as it is used to apply your own filters to data, that can add to existing filters or even replace them.
+
+8. Filter ()
+The filter function works the same way as CALCULATE; however, its major difference is that the FILTER functions are not mutable; It can only subset the data. FILTER is an expression that can be used in unison with an existing function such as CALCULATE the SUMX, we have used Filter to FILTER the unit price which is greater than 300 to calculate sales of the product which are expensive (greater than 300)
+
+9. ALL(<table>[<column>])
+
+
+--DAX Functions for Power BI: Date and Time Functions
+
+1. DATE: This function returns a pre-specified date as output in datetime format. It operates using the following syntax:
+DATE(<year>, <month>, <day>)
+
+2. DATEVALUE: This function converts the format of the date from text to datetime. It operates using the following syntax:
+DATEVALUE(date_text)
+
+3. TODAY: This function returns the current date as output and operates using the following syntax:
+TODAY()
+
+4. WEEKDAY: This function takes in date as input and returns a number( 1 to 7) corresponding to the day of the week of a date. It operates using the following syntax:
+WEEKDAY(<date>, <return_type>)
+
+5. HOUR: This function returns the current hour in the form of a number ( 0 for 12:00 A.M. and 23 for 11:00 P.M.). It operates using the following syntax:
+HOUR(<datetime>)
+
+The other important functions under Day and Time Functions are as follows:
+
+MINUTE
+MONTH
+SECOND
+CALENDAR
+CALENDARAUTO
+TIME
+TIMEVALUE
+
+
+DAX Functions for Power BI: Information Functions
+
+1. CONTAINS: This function returns true or false depending on the values for referred columns. If all the values exist, then it returns true, otherwise false. It operates using the following syntax:
+CONTAINS(<table>, <columnName>, <value>[, <columnName>, <value>]…)  
+
+2. LOOKUPVALUE: This function finds the row that meets the whole criteria provided by  search_columnName and search_value and returns the value from result_columnName. It operates using the following syntax:
+LOOKUPVALUE( <result_columnName>, <search_columnName>,  <search_value>[, <search_columnName>, <search_value>]…) 
+
+
+3. ISBLANK: This function returns true for blank and false for any other value after checking the input value. It operates using the following syntax:
+ISBLANK(<value>)
+
+4. The other important functions under Information Functions are as follows:
+
+ISERROR
+ISEVEN
+ISLOGICAL
+ISNUMBER
+ISODD
+ISTEXT
+
+
+DAX Functions for Power BI: Logical Functions
+
+1. AND: This function returns true if both arguments present in the input expression are valid, else it returns false. It operates using the following syntax:
+AND(<logical1>,<logical2>) 
+
+2. NOT: This function changes the value of the input expression to its opposite counterpart. This implies it changes from true to false and vice-versa. It operates using the following syntax:
+  NOT(<logical>)  
+  
+
+3. OR: This function returns true if any of the arguments present in the input expression are valid, else it returns false. It operates using the following syntax:
+       OR(<logical1>,<logical2>) 
+	   
+	   
+4. SWITCH: This function matches the input expression with a list of values and returns one of the various possible outcomes. It operates using the following syntax:
+SWITCH(<expression>, <value>, <result>[, <value>, <result>]…[, <else>])  
+
+
+5. IF: This function checks the given condition and based on that returns a true or false condition provided the first argument is met. It operates using the following syntax:
+IF(logical_test>,<value_if_true>, value_if_false)
+
+
+6. The other important functions under Logical Functions are as follows:
+
+TRUE
+FALSE
+IFERROR
+IN
+
+
+DAX Functions for Power BI: Mathematical & Trigonometric Functions
+
+1. ABS: This function returns the absolute value of the given input number using the following syntax:
+ABS(<number>) 
+
+2. DIVIDE
+
+3. CEILING
+
+4. FLOOR
+
+DAX Functions for Power BI: Statistical Functions
+
+1. ADDCOLUMNS: This function performs the addition of calculated columns of the given table. It operates using the following syntax:
+ADDCOLUMNS(<table>, <name>, <expression>[, <name>, <expression>]…)  
+
+2. AVERAGE: This function calculates and returns the arithmetic mean of all the numbers of an input column using the following syntax:
+    AVERAGE(<column>)  
+
+3. AVERAGEA: This function also returns the arithmetic mean of column values but also manages the text and non-numeric values. It operates on the following syntax:
+AVERAGEA(<column>)
+ 
+
+4. The other important functions under Statistical are as follows:
+
+CONFIDENCE.NORM
+COUNT
+COUNTBLANK
+COUNTROWS
+CROSSJOIN
+DISTINCTCOUNT
+EXPON.DIST
+GENERATE
+GENERATEALL
+GEOMEAN
+GEOMEANX
+MAX
+MEDIAN
+MEDIANX
+MIN
+MINX
+
+
+DAX Functions for Power BI: Text Functions
+
+1. BLANK: This function simply returns a blank and works using the following syntax:
+  BLANK() 
+
+  
+2. CODE: This function returns a numeric value(code) corresponding to the first character in the input text string. IT operates using the following syntax:
+CODE(text)
+
+3. CONCATENATE: This function joins two input text strings and returns a single text string using the following syntax:
+CONCATENATE(<text1>, <text2>)
+EXACT: This function compares two text strings and if they are exactly the same, it returns a true value. It operates using the following syntax:
+
+4. EXACT(<text1>,<text2>)
+FIND: This function returns the starting point of a text string within another input text string. It operates using the following syntax:
+FIND(<find_text>, <within_text>[, [<start_num>][, <NotFoundValue>]])
+
+
+5. The other important functions under Text are as follows:
+
+COMBINEVALUES
+FORMAT
+LEFT
+MID
+REPLACE
+RIGHT
+SEARCH
+SUBSTITUTE
+TRIM
+UNICHAR
+
+6. DAX Functions for Power BI: Other Functions
+
+DATATABLE
+ERROR
+EXCEPT
+GENERATESERIES
+GROUPBY
+INTERSECT
+ISEMPTY
+ISSELECTEDMEASURE
+NATURALINNERJOIN
+NATURALLEFTOUTERJOIN
+SELECTEDMEASUREFORMATSTRING
+SUMMARIZECOLUMNS
+UNION
+VAR
+
+
