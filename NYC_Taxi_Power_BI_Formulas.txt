@@ -1,0 +1,268 @@
+NYC Green Taxi - Power BI Analsyis
+
+1. Rolling sum of fare_amount using drop_time
+>>>Rolling_Sum_Fare_Amount = CALCULATE(
+                            SUM(green_taxi[fare_amount]),
+                            FILTER(
+                                ALL(green_taxi),
+                                green_taxi[lpep_dropoff_datetime] <= EARLIER(green_taxi[lpep_dropoff_datetime])
+                            )
+                        )
+
+
+2. Make a new table with unique drop_time and aggregated sum of fare_amount
+>>> Dropoff_time_agg_fare_amount = 
+SUMMARIZE(
+    green_taxi,
+    green_taxi[lpep_dropoff_datetime].[Date],
+    "Total_Fare_Amount",sum(green_taxi[fare_amount])
+)
+
+3. Subtract fare_amount of lpep_dropoff_datetime with fare_amount of lpep_dropoff_datetime-1
+>>> fare_diff = 
+Dropoff_time_agg_fare_amount[Total_Fare_Amount] - 
+    LOOKUPVALUE(
+        Dropoff_time_agg_fare_amount[Total_Fare_Amount],
+        Dropoff_time_agg_fare_amount[Col_index], Dropoff_time_agg_fare_amount[Col_index] - 1
+    )
+	
+4. Extract Day , Month , Year , Hour from dropoff_time column
+
+Hour : dropoff_hour = HOUR(green_taxi[lpep_dropoff_datetime])
+Day : dropoff_day = DAY(green_taxi[lpep_dropoff_datetime])
+DayName : dropoff_day_name = FORMAT(green_taxi[lpep_dropoff_datetime],"dddd")
+MonthName : dropoff_month_name = FORMAT(green_taxi[lpep_dropoff_datetime],"mmm")
+Year: dropoff_year_name = FORMAT(green_taxi[lpep_dropoff_datetime],"yyyy")
+
+5. Fare per Mile: Calculate the fare amount divided by the trip distance to determine the fare per mile, which can help analyze the pricing structure and efficiency of taxi rides.
+>>> Fare per Mile = IF(
+    green_taxi[trip_distance]<>0,
+    round(green_taxi[fare_amount]/green_taxi[trip_distance],4),
+    green_taxi[fare_amount]
+)
+Observation : some Fare amount were in negative
+
+6. Tip Percentage: Calculate the percentage of the tip amount compared to the fare amount to analyze tipping behavior and trends.
+>>> Tip Percentage = green_taxi[tip_amount]/green_taxi[fare_amount]
+
+7. Trip Duration: Calculate the duration of each trip by subtracting the pickup_datetime from the dropoff_datetime, allowing you to analyze trip lengths and patterns.
+>>> Trip Duration = DATEDIFF(green_taxi[lpep_pickup_datetime] , green_taxi[lpep_dropoff_datetime] ,MINUTE)
+
+8. Season: Based on the month column, categorize each trip into different seasons (e.g., winter, spring, summer, fall) to analyze seasonal variations in taxi usage and fare amounts.
+>>> Season = SWITCH(
+    TRUE,
+    MONTH(green_taxi[lpep_dropoff_datetime]) IN {1,2,3} , "Winter",
+    MONTH(green_taxi[lpep_dropoff_datetime]) IN {4,5,6} , "Spring",
+    MONTH(green_taxi[lpep_dropoff_datetime]) IN {7,8,9} , "Summer",
+    MONTH(green_taxi[lpep_dropoff_datetime]) IN {10,11,12} , "Fall"
+)
+Note : using TRUE in switch can be used instead of multiple IF-ELSE statements.
+
+9. Time Slot: Divide the day into different time slots (e.g., morning, afternoon, evening, night) based on the hour of day to analyze taxi demand patterns during specific time periods.
+>>> Trip Time Slot = SWITCH(
+    TRUE,
+    HOUR(green_taxi[lpep_dropoff_datetime]) >= 0 && HOUR(green_taxi[lpep_dropoff_datetime]) < 6 , "Night",
+    HOUR(green_taxi[lpep_dropoff_datetime]) >= 6  && HOUR(green_taxi[lpep_dropoff_datetime]) < 12 , "Morning",
+    HOUR(green_taxi[lpep_dropoff_datetime]) >= 12 && HOUR(green_taxi[lpep_dropoff_datetime]) < 18 , "Afternoon",
+    HOUR(green_taxi[lpep_dropoff_datetime]) >= 18 && HOUR(green_taxi[lpep_dropoff_datetime]) < 24 , "Evening"
+)
+
+
+10. Day-Night Indicator: Create a column to indicate whether a trip occurred during the day or night based on the hour of day.
+>>> Trip_Day_Or_Night = SWITCH(
+    TRUE(),
+    HOUR(green_taxi[lpep_dropoff_datetime]) >= 6 && HOUR(green_taxi[lpep_dropoff_datetime]) < 18, "Day",
+    HOUR(green_taxi[lpep_dropoff_datetime]) >= 18 || HOUR(green_taxi[lpep_dropoff_datetime]) < 6, "Night",
+    "Unknown"
+)
+
+
+11. Weekday or Weekend: Create a column to categorize each trip as either a weekday or weekend trip based on the day of the week. This can help analyze differences in taxi usage patterns and fare amounts between weekdays and weekends.
+>>> WeekDay_Or_Weekend = IF(
+    AND(
+        WEEKDAY(green_taxi[lpep_dropoff_datetime],1) >= 2 , WEEKDAY(green_taxi[lpep_dropoff_datetime],1) < 6
+    ) , "Weekday", "Weekend"
+)
+
+12. Tip Percentage(measure) card in day and in night : Target is to find if people tip more during night
+DAY :
+>>> Tip_Percentage_At_Day = FORMAT(CALCULATE(
+    SUM(green_taxi[tip_amount]) / SUM(green_taxi[fare_amount]),
+    FILTER(
+        ALL(green_taxi),
+        green_taxi[Trip_Day_Or_Night] = "Day"
+    )
+),"0.00%")
+
+NIGHT :
+>>> Tip_Percentage_At_Night = FORMAT(CALCULATE(
+    SUM(green_taxi[tip_amount]) / SUM(green_taxi[fare_amount]),
+    FILTER(
+        ALL(green_taxi),
+        green_taxi[Trip_Day_Or_Night] = "Night"
+    )
+),"0.00%")
+
+>>Coverted into % as i wanted to visualize the tip percentage at night in % .
+
+13. To convert a datetime column into 12-hour format datetime column
+>>> Time12Hour = FORMAT([TimeOnly], "hh:mm tt")
+
+14. To convert a datetime column into 24-hour format datetime column
+>>> Time24Hour = FORMAT([TimeOnly], "HH:mm")
+
+15. Holiday , Weekday or Weekend: Create a column to categorize each trip as either a holiday , weekday or weekend trip. This can help analyze differences in taxi usage patterns and fare amounts between holidays , weekdays and weekends.
+
+-Created a Holiday Table
+>> Holiday_Table = GENERATESERIES(DATE(2018,1,2),DATE(2018,1,5))
+
+FORMULA : 
+>>> Holiday_Or_Weekday_Or_Weekend = 
+IF(
+	COUNTROWS(
+		FILTER(
+			Holiday_table,
+			Holiday_table[Holiday_Date].[Date] = green_taxi[lpep_dropoff_datetime].[Date]
+		)
+	) > 0,
+	"Holiday",
+	IF(
+        WEEKDAY(green_taxi[lpep_dropoff_datetime],1)>=2 && WEEKDAY(green_taxi[lpep_dropoff_datetime],1)<=6,
+        "Weekday","Weekend"
+    )
+)
+
+COUNT ROWS SYNTAX:
+COUNTROWS ( table )
+COUNTROWS ( DISTINCT ( table ) )
+COUNTROWS ( VALUES ( table ) )
+
+---------------------------------------------------------
+Q. Use of DEFINE and EVALUATE in Power BI
+In Power BI, the DEFINE and EVALUATE statements are used in the DAX (Data Analysis Expressions) language to define and execute queries against the underlying data model. Here's a brief explanation of their usage:
+
+DEFINE:
+The DEFINE statement is used to create a named query or a table expression within a DAX query. It allows you to define a query expression and assign it a name that can be referenced later in the same DAX query. The syntax for DEFINE is as follows:
+
+DEFINE <query_name> = <query_expression>
+Here, <query_name> is the name you assign to the query, and <query_expression> is the DAX expression that defines the query. You can use the defined query later in the EVALUATE statement or other DAX expressions.
+
+EVALUATE:
+The EVALUATE statement is used to execute a query against the data model and retrieve the results. It allows you to retrieve data from tables or perform calculations using DAX expressions. The syntax for EVALUATE is as follows:
+
+EVALUATE <table_expression>
+Here, <table_expression> represents the DAX expression that specifies the table or calculation you want to evaluate. It can be a table name, a table expression defined using DEFINE, or a combination of DAX functions and operators.
+
+An example of using DEFINE and EVALUATE together in Power BI:
+
+DEFINE
+    SalesAmountByCategory = SUMMARIZE('Sales', 'Sales'[Category], "Total Sales", SUM('Sales'[Amount]))
+
+EVALUATE
+    SalesAmountByCategory
+In this example, the DEFINE statement creates a named query called "SalesAmountByCategory" that summarizes the 'Sales' table by category and calculates the total sales amount for each category. The EVALUATE statement then executes the query and returns the results.
+
+Note that the use of DEFINE and EVALUATE is more common in tools like Power BI Desktop for building complex DAX queries and calculations. In Power BI reports and dashboards, you typically use the Query Editor or the Power Query M language to shape and transform data before it's loaded into the data model.
+
+
+Q. MEASURE  keyword in power bi
+In Power BI, the MEASURE keyword is used to define calculated measures within a data model. Measures are calculations that perform aggregations or calculations on data in a table and are used to provide insights and perform calculations in visualizations and reports.
+
+An Complete example using DEFINE , EVALUATE and MEASURE
+Example 1: 
+--  COUNTROWS counts the number of rows in a table
+DEFINE
+    MEASURE Customer[# Customers] =
+        COUNTROWS ( Customer )
+    MEASURE Customer[# Countries 1] =
+        COUNTROWS ( DISTINCT ( Customer[CountryRegion] ) )
+    MEASURE Customer[# Countries 2] =
+        DISTINCTCOUNT ( Customer[CountryRegion] )
+EVALUATE
+SUMMARIZECOLUMNS (
+    Customer[Continent],
+    "# Customers", [# Customers],
+    "# Countries 1", [# Countries 1],
+    "# Countries 2", [# Countries 2]
+)
+
+Example 2:
+--  COUNTROWS is often used inside CALCULATE to count
+--  the number of rows in a filtered table
+DEFINE
+    MEASURE Customer[# Individuals] =
+        CALCULATE (
+            COUNTROWS ( Customer ),
+            Customer[Customer Type] = "Person"
+        )
+    MEASURE Customer[# Companies] =
+        CALCULATE (
+            COUNTROWS ( Customer ),
+            Customer[Customer Type] = "Company"
+        )
+EVALUATE
+SUMMARIZECOLUMNS (
+    Customer[Continent],
+    "# Individuals", [# Individuals],
+    "# Companies", [# Companies]
+)
+
+
+---------------------------------------------------------
+16. Count the number of E's in the column Holiday_Or_Weekday_Or_Weekend
+E_Count = 
+VAR A = LEN(green_taxi[Holiday_Or_Weekday_Or_Weekend])
+VAR B = LEN(SUBSTITUTE(green_taxi[Holiday_Or_Weekday_Or_Weekend],"e",""))
+RETURN A-B
+
+NOTE : SUBSTITUTE: Replaces existing text with new text in a text string.
+NOTE : REPLACE : Replaces part of a text string with a different text string.
+	REPLACE(Oldtext,StartPosition,NumberOfChars,NewText)
+
+17. Create a Measure fare_amount + tip_amount using sumx
+>>> SUMX_Fare_Tip_Amt = SUMX(green_taxi,green_taxi[fare_amount] + green_taxi[tip_amount])
+
+18. Create a Measure to calculate the median of fare amount + tolls amount
+>>> MedianX_Fare_Tolls_Amt = MEDIANX(green_taxi, green_taxi[fare_amount] + green_taxi[tolls_amount])
+
+19. Make a column demonstrating the working of MID, LEFT and RIGHT
+>>> Left_Mid_Right = SWITCH(
+    TRUE(),
+    lower(green_taxi[Holiday_Or_Weekday_Or_Weekend]) = "holiday", 
+    LEFT(green_taxi[Holiday_Or_Weekday_Or_Weekend],3),
+    lower(green_taxi[Holiday_Or_Weekday_Or_Weekend]) = "weekday", 
+    MID(green_taxi[Holiday_Or_Weekday_Or_Weekend],3,4),
+    RIGHT(green_taxi[Holiday_Or_Weekday_Or_Weekend],3)
+)
+
+20. Count the no. of rows with fare amount > 10
+>>> CountFareAmountsGreaterThan10 = COUNTX(FILTER(green_taxi, green_taxi[fare_amount] > 10), green_taxi[fare_amount])
+
+>>> CountFareAmountsGreaterThan10 = COUNTROWS(FILTER(green_taxi, green_taxi[fare_amount] > 10))
+
+
+NOTE : COUNTX and COUNTAX are identical in DAX for all the data types except Boolean. COUNTAX can operate on a Boolean data type, whereas COUNTX cannot do that.
+NOTE : The COUNT function is an aggregation function that counts the number of rows in a column or table. It simply returns the count of non-blank values in the specified column or table.
+NOTE : COUNTBLANK : Counts the number of blanks in a column.
+
+21. GROUP BY pickup_date with aggregating fare amount
+>>pickup_groupby = GROUPBY(green_taxi,
+    green_taxi[lpep_pickup_datetime].[Date],
+    "pickup_date",SUMX(CURRENTGROUP(),green_taxi[fare_amount])
+)
+
+22. ADDCOLUMNS
+Returns a table with new columns specified by the DAX expressions.
+
+23. GENERATE
+>> NewTable = GENERATE(Products, Regions)
+-This formula will create a new table called "NewTable" that combines every row from the "Products" table with every row from the "Regions" table.
+
+- If you want to generate combinations based on specific conditions or filters, you can add additional arguments to the GENERATE function. For example, let's say you only want to generate combinations where the product price is greater than $100:
+>>NewTable = GENERATE(FILTER(Products, Products[Price] > 100), Regions)
+
+GENERATE is more flexible than CROSS JOIN as it gives the ability to use FILTER
+
+
+
+ 

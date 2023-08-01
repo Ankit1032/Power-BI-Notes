@@ -1,0 +1,55 @@
+1. TopN ()
+# Returns a table containing top-N records
+
+# SYNTAX : TOPN(N_Value, Table, [Orderby_expression1],[Order]....)
+
+# TopN_Fare_Amount = TOPN(7,green_taxi,green_taxi[fare_amount])
+
+2. CONCATENATE()
+	#Used for calculated table , concatenates 2 strings
+
+	#SYNTAX : CONCATENATE(text1, text2)
+
+	# Concat_season_holiday = CONCATENATE(green_taxi[Season],green_taxi[Holiday_Or_Weekday_Or_Weekend])
+	
+	# Concat_season_holiday = green_taxi[Season] & " , " & green_taxi[Holiday_Or_Weekday_Or_Weekend]
+
+2. CONCATENATEX ()
+	# It is used to concatenate texts, numbers..
+
+	# CONCATENATEX : Evaluates expression for each row on the table, then return the concatenation of those values in a single string result, seperated by the specified delimiter.
+
+Q. Find the yearly - monthly best fare_amount of PuLocationId
+>>Best_Pulocation_fare_tipamount = SUMX(
+    TOPN(
+        1,green_taxi,green_taxi[fare_amount],DESC
+    ),green_taxi[fare_amount]
+)
+
+TOPN(<n_value>, <table>, <orderBy_expression>, [<order>[, <orderBy_expression>, [<order>]]…])
+
+
+
+3. FILTER()
+	# Filter will return whole table but will filter according to the expression.
+
+	# filter_table = FILTER(green_taxi,green_taxi[fare_amount]>50)
+	
+4. CUSTOM VISUALS
+	
+	# Import custom visuals from power bi desktop marketplace/AppSource
+	
+	# In the place of default visuals , click on the three dots -< get more visuals
+	
+	#Tackometer is like gauge
+	
+	#Bullet chart is like 
+	
+	#Dynamic Slicer - it plays all the filters possible
+	
+	#Timeline Slicer - Used to slice time (yearly, monthly, Quaterly, weekly, daily)
+	
+	#Tornado Chart : Comparing the relevant importance of variable between two groups
+	
+	#Note : You can also import custom visuals from "Import from file"
+
